@@ -1,0 +1,22 @@
+{
+  "name": "step_adoptionsplus",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@badeball/cypress-cucumber-preprocessor": "^18.0.1"
+  },
+  "devDependencies": {
+    "@bahmutov/cypress-esbuild-preprocessor": "^2.2.0",
+    "@cypress/webpack-preprocessor": "^5.17.1",
+    "cypress": "^12.16.0",
+    "esbuild": "^0.18.10",
+    "mailslurp-client": "^15.17.2"
+  }
+}
