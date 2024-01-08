@@ -38,7 +38,7 @@ jobs:
       - script: npm run cy:verify
         displayName: 'Cypress verify'
 
-        - script: npm run cy:run
+      - script: npm run cy:run
         displayName: 'Run Cypress tests'
 
       # The next command starts the server and runs Cypress end-to-end tests against it.
