@@ -37,7 +37,7 @@ async function setupNodeEvents(on, config) {
 module.exports = defineConfig({
   projectId: 'bxjqrq',
   e2e: {
-    baseUrl: 'https://adoptionsplus-qa.azurewebsites.net/',
+    baseUrl: 'https://adoptionsplus-qa.azurewebsites.net',
     specPattern: "**/*.feature",
     defaultCommandTimeout: 30000,
     requestTimeout: 30000,
@@ -52,5 +52,5 @@ module.exports = defineConfig({
     numTestsKeptInMemory: 0,
     setupNodeEvents,
   },
-  //t
+
 });

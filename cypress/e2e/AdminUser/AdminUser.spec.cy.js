@@ -69,25 +69,46 @@ Then(/^I should be redirected to the email confirmed 2-step verification with yo
 });
 
 Then(/^I enter my phone number and click submit button$/, () => {
-
     cy.get('input[name="phone"]').type(phone_number, { force: true })
     cy.get('button.btn.btn-warning.btn-lg.btn-block').contains('Submit').click({ force: true })
 });
 
 Then(/^The system should send a 6-digit verification code to my phone number$/, () => {
+    // cy.wait(2000)
+    // cy.request('https://receive-smss.com/sms/447946268462/')
+    //     .then(html => {
+    //         const OTPCode = html.body.match(/.*Your STEP verification code is*./)
+    //         const Code = OTPCode[0].match(/<b>\d+/)
+    //         console.log(Code)
+    //         console.log(OTPCode)
+    //         return Code[0].match(/\d+/)[0]
+    //     }).then(otp => {
+    //         cy.log(otp);
+    //         cy.get('.form-control').should('exist').type(otp)
+    //         //PageObjectCy.LoginVerfiyCode().should('exist').type(otp)
+    //     })
     cy.wait(2000)
     cy.request('https://receive-smss.com/sms/447946268462/')
-        .then(html => {
-            const OTPCode = html.body.match(/.*Your STEP verification code is*./)
-            const Code = OTPCode[0].match(/<b>\d+/)
-            console.log(Code)
-            console.log(OTPCode)
-            return Code[0].match(/\d+/)[0]
-        }).then(otp => {
-            cy.log(otp);
-            cy.get('.form-control').should('exist').type(otp)
-            //PageObjectCy.LoginVerfiyCode().should('exist').type(otp)
-        })
+      .then(html => {
+    const OTPCode = html.body.match(/.*Your STEP verification code is*./);
+    // Check if OTPCode is not null before accessing its elements
+    if (OTPCode) {
+      const Code = OTPCode[0].match(/<b>\d+/);      
+      // Check if Code is not null before accessing its elements
+      if (Code) {
+        const numericCode = Code[0].match(/\d+/)[0];
+        console.log(numericCode)        
+        // Do something with the numericCode, like typing it into an input field
+        cy.get('.form-control').should('exist').type(numericCode);
+      } else {
+        // Handle the case when Code is null
+        console.error('Code is null or undefined.');
+      }
+    } else {
+      // Handle the case when OTPCode is null
+      console.error('OTPCode is null or undefined.');
+    }
+  });
 
 });
 
@@ -133,35 +154,6 @@ Then(/^The system will display a message "([^"]*)"$/, (args1) => {
     cy.get('.card-body').find('h4')
         .contains('If your account exists, a password reset email is on its way to you.')
 });
-
-// Then(/^I verify the reset password link is sent to the email and I click on the reset password link$/, () => {
-//     cy.waitForLatestEmail(inboxId, 30000, true).then((email) => {
-//         const emailBody = email.body
-//         const parser = new DOMParser();
-//         const doc = parser.parseFromString(emailBody, 'text/html')
-//         const anchor = doc.querySelector('a')
-//         const href = anchor.href
-//         cy.visit(href)
-//     })
-// });
-
-// When(/^I enter the current password and new password and confirm password$/, () => {
-//     cy.location('pathname').should('include', '/password-reset')
-//     cy.get('h1').contains('create new password').should('exist')
-//     cy.get('input[name="password"]').should('have.attr', 'placeholder', 'class').type('Qwerty#123')
-//     cy.get('input[name="passwordConfirm"]').should('have.attr', 'class').type('Qwerty#123')
-// });
-
-// When(/^I Click reset password button.$/, () => {
-//     //cy.get('button.btn.btn-warning.btn-Ig.btn-block').should('exist').click({force:true})
-//     PageObjectCy.ResetpasswordButton().should('exist')
-//         .contains('Reset password')
-//         .click({ force: true })
-// });
-
-// Then(/^The system should reset my password$/, () => {
-//     return true;
-// });
 
 //Admin parent user login 
 When(/^I navigate to the STEP home page and I click the Sign in link$/, () => {
@@ -468,7 +460,7 @@ Then(/^I should be redirected to each corresponding page$/, () => {
 });
 // navigate to the FAQs screen and I see all Frequently Asked Questions
 When(/^I click each FAQ accordion then each Frequently Asked Questions should pop up open$/, () => {
-
+    
     cy.get('nav > a[href*="/faq"]').should('exist').click()
     cy.location('pathname').should('include', '/faq')
     cy.get('.col-12').find('h1').contains(' Frequently Asked Questions ')
@@ -479,26 +471,9 @@ When(/^I click each FAQ accordion then each Frequently Asked Questions should po
             cy.get(`#collapse-${index} > :nth-child(${index + 1})`).should('be.visible');
             cy.get(`:nth-child(${index + 1}) > .accordion-title > .icon-up-open`).click({ force: true });
             cy.get(`#collapse-${index} > :nth-child(${index + 1})`).should('exist');
+
         });
+        
     }); 
-    // cy.get(':nth-child(1) > .accordion-title').click({force:true})
-    // cy.get('#collapse-0 > :nth-child(1)').should('be.visible')
-    // cy.get(':nth-child(1) > .accordion-title > .icon-up-open').click({force:true})
-    // cy.get('#collapse-0 > :nth-child(1)').should('not.be.visible')
-
-    // cy.get(':nth-child(2) > .accordion-title').click({force:true})
-    // cy.get('#collapse-1 > :nth-child(2)').should('be.visible')
-    // cy.get(':nth-child(2) > .accordion-title > .icon-up-open').click({force:true})
-    // cy.get('#collapse-1 > :nth-child(2)').should('not.be.visible')
-
-    // cy.get(':nth-child(3) > .accordion-title').click({force:true})
-    // cy.get('#collapse-2 > img').should('exist')
-    // cy.get(':nth-child(3) > .accordion-title > .icon-up-open').click({force:true})
-    // cy.get('#collapse-2 > :nth-child(3)').should('not.exist')    
-
-    // cy.get(':nth-child(4) > .accordion-title').click({force:true})
-    // cy.get('#collapse-3 > :nth-child(2)').should('be.visible')
-    // cy.get(':nth-child(4) > .accordion-title > .icon-up-open').click({force:true})
-    // cy.get('#collapse-4 > :nth-child(2)').should('not.be.visible')
 });
 

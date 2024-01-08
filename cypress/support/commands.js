@@ -1,22 +1,4 @@
-// -- This is a parent command --
-// Cypress.Commands.add('login', (email, password) => { ... })
-//
-//
-// -- This is a child command --
-// Cypress.Commands.add('drag', { prevSubject: 'element'}, (subject, options) => { ... })
-//
-//
-// -- This is a dual command --
-// Cypress.Commands.add('dismiss', { prevSubject: 'optional'}, (subject, options) => { ... })
-//
-//
-// -- This will overwrite an existing command --
-// Cypress.Commands.overwrite('visit', (originalFn, url, options) => { ... })
 
-//const mailslurp = require('mailslurp-client').default;
-//import MailSlurp from 'mailslurp-client';
-
-//import MailSlurp from 'mailslurp-client';
 const { MailSlurp } = require('mailslurp-client');
 const mailslurp = new MailSlurp({ apiKey: "20d13f9c737fcc442caa145a1eb3757e3f90a407d8851558670fbe635e5dd978" });
 //57ba865941de9c0a5c0153dc8b6157fbb25ac63a137a2c176ea73459819d5852 == for christain@greenwoodcampbell.com with Phone number and cancel your subscription
